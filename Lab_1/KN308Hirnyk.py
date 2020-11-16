@@ -19,27 +19,13 @@ def convert(db):
     db['Time'] = db['Time'].apply(lambda x: datetime.strptime(x, "%I:%M %p").strftime('%H:%M'))
 
 
-db = pd.read_csv('D:\Labs_PP\IAD_Lab1\DATABASE.csv', sep=';')
+db = pd.read_csv('D:\Labs_PP\IAD_Lab1\DATABASE.csv', sep=';', decimal=',')
 convert(db)
 db = db.set_index('day/month')
 
-print('Hello')
 
-while True:
-    print('To draw graph with one parament(y) write 1, for two paramatres write 2, to show graphs - 3')
-    command = int(input())
-    if command == 1:
-        print('Enter columns[' + ', '.join(columns) + ']')
-        columns = input().split(',')
-        print('Enter type of graphic [' + ', '.join(plotter.graph_types_for_one) + ']')
-        kind = input()
-        for column in columns:
-            plotter.plot(db, kind, column)
-    elif command == 2:
-        print('Enter two columns[' + ', '.join(columns) + ']')
-        columns = input().split(',')
-        print('Enter type of graphic [' + ', '.join(plotter.graph_types_for_two) + ']')
-        kind = input()
-        plotter.plot(db, kind, columns)
-    elif command == 3:
-        plotter.show()
+cols = [['Wind'], ['Condition'], ['Wind Speed'], ['Wind Gust', 'Temperature']]
+
+plotter.plot(db, cols)
+
+
